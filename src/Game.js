@@ -2,6 +2,7 @@ import React,{useContext,useEffect,useState} from 'react'
 import { APIContext } from './APIContext'
 import CategoryExtensionsList from './CategoryExtensionsList'
 import TimesList from './TimesList'
+import './Css/Game.css'
 
 const emptyGameInfo = {admins:[],categoryExtensions:[],title:"",urlTitle:""}
 
@@ -34,22 +35,21 @@ function Game({match,history}) {
     },[])
 
 
-
+    console.log(match.params.title)
     return (
-        <div>
-            {gameInfo != null && gameInfo.title}
+        <div id="game" className="box-styling">
+            <h3>{gameInfo != null && gameInfo.title}</h3>
 
 
 
             {gameInfo != null && <CategoryExtensionsList list={gameInfo.categoryExtensions} 
                                                          gameUrl={match.params.title} />}
-
-            selected category extension:{match.params.categoryExtension}
             
-            {match.params.categoryExtension != undefined && <TimesList gameUrl={match.params.title}
-                                                                       categoryExtensionUrl={match.params.categoryExtension}/>}
+            {/*match.params.categoryExtension != undefined && <TimesList gameUrl={match.params.title}
+                                                                       categoryExtensionUrl={match.params.categoryExtension}/>*/}
+            <TimesList match={match}/>
 
-            </div>
+        </div>
     )
 }
 

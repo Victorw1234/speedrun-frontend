@@ -9,6 +9,7 @@ import Logout from "./Logout";
 import Header from "./Header";
 import GameList from "./GameList";
 import Game from './Game'
+import Page404 from "./Page404";
 
 function App() {
   const [username, setUsername] = useLocalStorage("username", null);
@@ -51,47 +52,36 @@ function App() {
           <Header updateUser={setUsername}/>
 
             <Switch>
-            
-
-
-              <Route path="/" exact render={() => <><h1>Home page</h1> <GameList/></>}/>
-              <Route exact
-                path="/Login"
-                render={() => {
-                  return <Login updateUser={setUsername} />;
-                }}
-              />
-              <Route exact
-                path="/Games"
-                component={GameList}
-              />
-              <Route exact
-                path="/Game/:title"
-                component={Game}
-              />
-              <Route exact
-                path="/Game/:title/:categoryExtension"
-                component={Game}
-              />
-              <Route 
-                path="/"
-                render={() => {return <h2>404</h2>}}
+                <div className="content-container">
+                <Route exact
+                  path="/Login"
+                  render={() => {
+                    return <Login updateUser={setUsername} />;
+                  }}
                 />
+                <Route exact
+                  path="/Games"
+                  component={GameList}
+                />
+                <Route exact
+                  path="/Game/:title"
+                  component={Game}
+                />
+                <Route exact
+                  path="/Game/:title/:categoryExtension"
+                  component={Game}
+                />
+                {/*<Route 
+                  component={Page404}
+                  />*/}
+                </div>
             </Switch>
           </BrowserRouter>
         </UserContext.Provider>
       </APIContext.Provider>
 
 
-      <button
-        onClick={() => {
-          fetch("http://localhost:52107/Login", { credentials: "include" })
-            .then((response) => response.json())
-            .then((data) => console.log(data));
-        }}
-      >
-        asdf
-      </button>
+
     </div>
   );
 }

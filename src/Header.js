@@ -14,6 +14,7 @@ function Header({updateUser}) {
             <nav>
                 <span style={{'textAlign':'left'}}>
                     <Link to="/">Home</Link>
+                    <Link to="/Games">Game List</Link>
                     {username == null && <Link to="/Login">Login</Link>}
                 </span>
                 <span>
