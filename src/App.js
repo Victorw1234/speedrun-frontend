@@ -10,6 +10,7 @@ import Header from "./Header";
 import GameList from "./GameList";
 import Game from './Game'
 import Page404 from "./Page404";
+import Signup from "./Signup";
 
 function App() {
   const [username, setUsername] = useLocalStorage("username", null);
@@ -50,9 +51,9 @@ function App() {
         <UserContext.Provider value={username}>
           <BrowserRouter>
           <Header updateUser={setUsername}/>
-
+          <div className="content-container">
             <Switch>
-                <div className="content-container">
+                
                 <Route exact
                   path="/Login"
                   render={() => {
@@ -71,11 +72,17 @@ function App() {
                   path="/Game/:title/:categoryExtension"
                   component={Game}
                 />
+                <Route exact
+                  path="/Signup"
+                  component={Signup}
+                />
+
                 {/*<Route 
                   component={Page404}
                   />*/}
-                </div>
+                
             </Switch>
+            </div>
           </BrowserRouter>
         </UserContext.Provider>
       </APIContext.Provider>

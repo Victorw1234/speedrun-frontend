@@ -48,7 +48,9 @@ function Game({match,history}) {
             {/*match.params.categoryExtension != undefined && <TimesList gameUrl={match.params.title}
                                                                        categoryExtensionUrl={match.params.categoryExtension}/>*/}
             <TimesList match={match}/>
+                                                                             
 
+            
         </div>
     )
 }
