@@ -28,15 +28,11 @@ function Signup() {
         return response;
     }
 
-    function handleFormSubmit(e) {
+    async function handleFormSubmit(e) {
         e.preventDefault();
-        fetchSignUp().then((data) => {
-            console.log(data)
-            setSignedUp(data.signedUp)
-        });
-
-
-
+        let response = await fetchSignUp()
+        console.log(response)
+        setSignedUp(response.signedUp)
     }
 
     return (
