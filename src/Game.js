@@ -40,13 +40,9 @@ function Game({match,history}) {
         <div id="game" className="box-styling">
             <h3>{gameInfo != null && gameInfo.title}</h3>
 
-
-
             {gameInfo != null && <CategoryExtensionsList list={gameInfo.categoryExtensions} 
                                                          gameUrl={match.params.title} />}
             
-            {/*match.params.categoryExtension != undefined && <TimesList gameUrl={match.params.title}
-                                                                       categoryExtensionUrl={match.params.categoryExtension}/>*/}
             <TimesList match={match}/>
                                                                              
 

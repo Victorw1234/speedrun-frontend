@@ -4,20 +4,20 @@ import { APIContext } from "./APIContext";
 import { UserContext } from "./UserContext";
 import useLocalStorage from "./useLocalStorage";
 import { useEffect } from "react";
-import { BrowserRouter, Route,Switch } from "react-router-dom";
+import { BrowserRouter, Redirect, Route,Switch } from "react-router-dom";
 import Logout from "./Logout";
 import Header from "./Header";
 import GameList from "./GameList";
 import Game from './Game'
 import Page404 from "./Page404";
 import Signup from "./Signup";
+import AddTime from "./AddTime";
 
 function App() {
-  const [username, setUsername] = useLocalStorage("username", null);
+  const [username, setUsername] = useLocalStorage("username",null);
 	let API = 'http://localhost:52107';
 
   async function onStartup() {
-	setUsername(null);
 
 
 	  var isLoggedIn = false;
@@ -38,7 +38,14 @@ function App() {
 		console.log("if ran now")
 		setUsername(fetchedUsername);
 	}
+  else {
+    setUsername(null)
   }
+  }
+
+  useEffect(() => {
+    console.log(username)
+  },[username])
 
   useEffect(() => {
     onStartup();
@@ -61,6 +68,11 @@ function App() {
                   }}
                 />
                 <Route exact
+                  path="/Signup"
+                  component={Signup}
+                />
+
+                <Route exact
                   path="/Games"
                   component={GameList}
                 />
@@ -72,10 +84,18 @@ function App() {
                   path="/Game/:title/:categoryExtension"
                   component={Game}
                 />
-                <Route exact
-                  path="/Signup"
-                  component={Signup}
-                />
+                { // should only be able to add times if logged in
+                  username != null ? 
+                  <Route exact
+                    path="/Game/:title/:categoryExtension/addtime"
+                    component={AddTime}
+                  />
+                  :
+                  <Redirect to="/Login"/>
+                }
+                
+                
+                
 
                 {/*<Route 
                   component={Page404}
