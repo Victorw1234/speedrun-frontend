@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { UserContext } from "./UserContext";
 import { APIContext } from "./APIContext";
 import { Link } from "react-router-dom";
+import Loading from "./Loading";
 
 function AddTime({ match }) {
   const username = useContext(UserContext);
@@ -112,7 +113,9 @@ function AddTime({ match }) {
         </div>
       ) : (
         formJSX
-      )}
+      )
+      }
+      {isLoading && <Loading/>}
     </>
   );
 }
