@@ -3,12 +3,15 @@ import { APIContext } from "./APIContext";
 import useLocalStorage from "./useLocalStorage";
 import { UserContext } from "./UserContext";
 import { Link } from "react-router-dom";
+import { TextField, Button } from "@material-ui/core";
+import "./Css/Form.css";
+import "./Css/Login.css"
 
 function Login({ updateUser }) {
   const username = useContext(UserContext);
   const [inputUsername, setInputUsername] = useState("");
   const [inputPassword, setInputPassword] = useState("");
-  const [loginError, setLoginError] = useState("")
+  const [loginError, setLoginError] = useState("");
   const API = useContext(APIContext);
 
   async function fetchLogin() {
@@ -34,39 +37,51 @@ function Login({ updateUser }) {
     response.then((data) => {
       console.log(data);
       if (data.success) {
-        updateUser(data.username)
-      }
-      else {
-        setLoginError("That user does not exist")
+        updateUser(data.username);
+      } else {
+        setLoginError("That user does not exist");
       }
     });
   }
 
   return (
-    <div>
+    <div id="form-div">
       {username == null ? (
         <>
-          Login page
-          <form>
-            <input
-              placeholder="username"
+          <h3>Login page</h3>
+          <form id="login-form">
+            <TextField
+              className="TextFieldModify"
+              required
+              id="standard-basic"
+              label="Username"
               onChange={(e) => {
                 setInputUsername(e.target.value);
               }}
               value={inputUsername}
-              type="text"
             />
-            <input
-              placeholder="password"
+            <TextField
+              className="TextFieldModify"
+              required
+              id="standard-basic"
+              label="Password"
               onChange={(e) => {
                 setInputPassword(e.target.value);
               }}
               value={inputPassword}
               type="password"
             />
-            <input onClick={onFormSubmit} type="submit" />
+            <Button
+              className="TextFieldModify"
+              size="small"
+              onClick={onFormSubmit}
+              variant="contained"
+              color="primary"
+            >
+              Log in
+            </Button>
           </form>
-          <div style={{color:"red"}}>{loginError}</div>
+          <p style={{ color: "red" }}>{loginError}</p>
           <p>
             Not a member? Sign up <Link to="/Signup">here</Link>
           </p>
@@ -74,8 +89,6 @@ function Login({ updateUser }) {
       ) : (
         <h3>You are logged in</h3>
       )}
-
-      
     </div>
   );
 }

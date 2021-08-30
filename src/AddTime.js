@@ -3,6 +3,7 @@ import { UserContext } from "./UserContext";
 import { APIContext } from "./APIContext";
 import { Link } from "react-router-dom";
 import Loading from "./Loading";
+import { Button, TextField } from "@material-ui/core";
 
 function AddTime({ match }) {
   const username = useContext(UserContext);
@@ -77,19 +78,18 @@ function AddTime({ match }) {
   }
 
   let formJSX = (
-    <div>
-      adding time for {match.params.title} {match.params.categoryExtension}
-      <form>
-        <label>Link:</label>
-        <input
+    <div id="form-div">
+      <form id="signup-form">
+        <TextField
+          label="Link"
           value={formLink}
           onChange={(e) => {
             setFormLink(e.target.value);
           }}
+          helperText={formLinkError}
+          error={formLinkError !== ""}
           type="url"
         />
-        <div>{formLinkError}</div>
-        <label>Time:</label>
         <input
           value={formTime}
           onChange={(e) => {
@@ -98,8 +98,15 @@ function AddTime({ match }) {
           type="time"
           step="0.01"
         />
-        <div>{formTimeError}</div>
-        <input onClick={handleFormSubmit} type="submit" />
+        <div style={{ textAlign:"center",fontSize:"12px",color:"red"}}>{formTimeError}</div>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleFormSubmit}
+          type="submit"
+        >
+          Submit
+        </Button>
       </form>
     </div>
   );
@@ -109,13 +116,16 @@ function AddTime({ match }) {
       {timeSubmitted ? (
         <div>
           Congratulations on your submitted time!
-          <Link to={`/Game/${match.params.title}/${match.params.categoryExtension}`}>Go back</Link>
+          <Link
+            to={`/Game/${match.params.title}/${match.params.categoryExtension}`}
+          >
+            Go back
+          </Link>
         </div>
       ) : (
         formJSX
-      )
-      }
-      {isLoading && <Loading/>}
+      )}
+      {isLoading && <Loading />}
     </>
   );
 }

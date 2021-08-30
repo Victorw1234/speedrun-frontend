@@ -1,0 +1,22 @@
+#form-div {
+    padding:12px;
+}
+
+#form-div p {
+    text-align:center;
+}
+
+#form-div h3 {
+    text-align: center;
+}
+
+input {
+    margin-top:6px;
+}
+
+
+
+#form-div form button {
+    height:60px;
+    margin-top:6px;
+}
