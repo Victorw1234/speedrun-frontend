@@ -2,6 +2,8 @@ import React, { useEffect, useContext, useState } from "react";
 import { APIContext } from "./APIContext";
 import { Link } from "react-router-dom";
 import Loading from "./Loading";
+import GameListEntry from "./Components/GameListEntry";
+import "./Css/GameList.css";
 
 function GameList() {
   const [listOfGames, setListOfGames] = useState([]);
@@ -31,15 +33,11 @@ function GameList() {
   }, []);
 
   const listOfGamesJSX = listOfGames.map((data, index) => {
-    return (
-      <li key={index}>
-        <Link to={`/Game/${data.urlTitle}`}>{data.title}</Link>
-      </li>
-    );
+    return <GameListEntry titleUrl={data.urlTitle} title={data.title} />;
   });
 
   return (
-    <div>
+    <div id="game-list">
       {loading && <Loading />}
       {listOfGamesJSX}
     </div>

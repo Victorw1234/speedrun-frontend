@@ -72,6 +72,7 @@ function App() {
                   path="/Game/:title/:categoryExtension"
                   component={Game}
                 />
+                
                 {
                   // should only be able to add times if logged in
                   username != null ? (

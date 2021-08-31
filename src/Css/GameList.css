@@ -1,0 +1,16 @@
+#game-list {
+    display:grid;
+    grid-template-columns: auto auto auto;
+}
+
+@media screen and (max-width: 992px) {
+    #game-list {
+        grid-template-columns:auto auto;
+    }
+}
+
+@media screen and (max-width: 630px) {
+    #game-list {
+        grid-template-columns:auto;
+    }
+}
