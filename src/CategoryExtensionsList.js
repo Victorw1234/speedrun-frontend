@@ -46,7 +46,13 @@ function CategoryExtensions({list,gameUrl}) {
         <>
         { showPopup === true && 
         <PopupMenu toggle={togglePopup}> 
-            <AddTime gameUrl={gameUrl} categoryExtension={addTimeFor}/>
+            <div style={{'backgroundColor':'white',
+                         'marginTop':'16px',
+                         'padding':'12px',
+                         'borderRadius':'4px',
+                         'boxShadow':'box-shadow: 0.05rem 0.1rem 0.3rem -0.03rem rgba(0, 0, 0, 0.45)'}} onClick={(e) => {e.stopPropagation()}}>
+                <AddTime gameUrl={gameUrl} categoryExtension={addTimeFor}/>
+            </div>
         </PopupMenu> 
         }
         <div id="list-of-category-extensions">

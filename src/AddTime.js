@@ -9,6 +9,7 @@ function AddTime({gameUrl,categoryExtension }) {
   const username = useContext(UserContext);
   const API = useContext(APIContext);
 
+
   const [formTime, setFormTime] = useState("");
   const [formLink, setFormLink] = useState("");
   const [formLinkError, setFormLinkError] = useState("");
@@ -16,8 +17,8 @@ function AddTime({gameUrl,categoryExtension }) {
 
   const [isLoading, setIsLoading] = useState(false);
   const [timeSubmitted, setTimeSubmitted] = useState(false);
-
   async function submitToAPI() {
+
     let response = await fetch(
       `${API}/api/Time/${gameUrl}/${categoryExtension}`,
       {
@@ -73,6 +74,7 @@ function AddTime({gameUrl,categoryExtension }) {
     response.then((data) => {
       setTimeSubmitted(data.timeAdded);
       console.log(data.msg);
+      window.location.reload(); // scuffad "solution"
     });
     setIsLoading(false);
   }
@@ -113,7 +115,7 @@ function AddTime({gameUrl,categoryExtension }) {
 
   return (
     <>
-      Add Time:
+      {timeSubmitted === false && <>Add Time:</>}
       {timeSubmitted ? (
         <div>
           Congratulations on your submitted time!

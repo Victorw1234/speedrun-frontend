@@ -4,6 +4,7 @@ import CategoryExtensionsList from "./CategoryExtensionsList";
 import TimesList from "./TimesList";
 import "./Css/Game.css";
 
+
 const emptyGameInfo = {
   admins: [],
   categoryExtensions: [],
@@ -42,14 +43,13 @@ function Game({ match, history }) {
     <div id="game" className="box-styling">
       <h3>{gameInfo != null && gameInfo.title}</h3>
 
-      {gameInfo != null && (
-        <CategoryExtensionsList
-          list={gameInfo.categoryExtensions}
-          gameUrl={match.params.title}
-        />
-      )}
-
-      <TimesList match={match} />
+        {gameInfo != null && (
+          <CategoryExtensionsList
+            list={gameInfo.categoryExtensions}
+            gameUrl={match.params.title}
+          />
+        )}
+        <TimesList match={match} />
     </div>
   );
 }

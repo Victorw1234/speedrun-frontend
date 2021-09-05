@@ -72,19 +72,6 @@ function App() {
                   path="/Game/:title/:categoryExtension"
                   component={Game}
                 />
-                
-                {
-                  // should only be able to add times if logged in
-                  username != null ? (
-                    <Route
-                      exact
-                      path="/Game/:title/:categoryExtension/addtime"
-                      component={AddTime}
-                    />
-                  ) : (
-                    <Redirect to="/Login" />
-                  )
-                }
 
                 {/*<Route 
                   component={Page404}
