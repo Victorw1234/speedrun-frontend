@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Loading from "./Loading";
 import { Button, TextField } from "@material-ui/core";
 
-function AddTime({ match }) {
+function AddTime({gameUrl,categoryExtension }) {
   const username = useContext(UserContext);
   const API = useContext(APIContext);
 
@@ -19,7 +19,7 @@ function AddTime({ match }) {
 
   async function submitToAPI() {
     let response = await fetch(
-      `${API}/api/Time/${match.params.title}/${match.params.categoryExtension}`,
+      `${API}/api/Time/${gameUrl}/${categoryExtension}`,
       {
         method: "POST",
         mode: "cors",
@@ -113,11 +113,12 @@ function AddTime({ match }) {
 
   return (
     <>
+      Add Time:
       {timeSubmitted ? (
         <div>
           Congratulations on your submitted time!
           <Link
-            to={`/Game/${match.params.title}/${match.params.categoryExtension}`}
+            to={`/Game/${gameUrl}/${categoryExtension}`}
           >
             Go back
           </Link>
