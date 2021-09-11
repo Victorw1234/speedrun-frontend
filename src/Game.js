@@ -41,7 +41,11 @@ function Game({ match, history }) {
   console.log(match.params.title);
   return (
     <div id="game" className="box-styling">
-      <h3>{gameInfo != null && gameInfo.title}</h3>
+      <div id="game-info">
+        <img style={{'width':'200px','height':'200px'}} src="/halo3.jpg"/>     
+        <h3>{gameInfo != null && gameInfo.title}</h3>
+        <h4 id="game-admins">Game admins:</h4> 
+      </div>
 
         {gameInfo != null && (
           <CategoryExtensionsList
