@@ -30,10 +30,7 @@ function Game({ match, history }) {
   useEffect(() => {
     let gameInfo = fetchGameInfo();
     gameInfo.then((data) => {
-      if (data == emptyGameInfo) {
-        history.push("/404");
-      }
-      console.log(data);
+      console.log("gameInfo: ",data);
       setGameInfo(data);
     });
   }, []);
@@ -41,18 +38,20 @@ function Game({ match, history }) {
   console.log(match.params.title);
   return (
     <div id="game" className="box-styling">
+      {gameInfo != null && <>
       <div id="game-info">
-        <img style={{'width':'200px','height':'200px'}} src="/halo3.jpg"/>     
+        <img alt="gameimg" style={{'width':'200px','height':'200px'}} src={`${API}/Resources/Images/${gameInfo.imageName}`}/>     
         <h3>{gameInfo != null && gameInfo.title}</h3>
         <h4 id="game-admins">Game admins:</h4> 
       </div>
 
-        {gameInfo != null && (
+        
           <CategoryExtensionsList
             list={gameInfo.categoryExtensions}
             gameUrl={match.params.title}
           />
-        )}
+          </>
+      }
         <TimesList match={match} />
     </div>
   );

@@ -33,7 +33,9 @@ function GameList() {
   }, []);
 
   const listOfGamesJSX = listOfGames.map((data, index) => {
-    return <GameListEntry titleUrl={data.urlTitle} title={data.title} />;
+    return <GameListEntry titleUrl={data.urlTitle} 
+                          title={data.title} 
+                          imageName={data.imageName}/>;
   });
 
   return (
