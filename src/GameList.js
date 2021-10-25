@@ -5,11 +5,15 @@ import Loading from "./Loading";
 import GameListEntry from "./Components/GameListEntry";
 import { UserContext } from "./UserContext";
 import "./Css/GameList.css";
+import { Button } from "@material-ui/core";
+import PopupMenu from "./Components/PopupMenu";
+
 
 function GameList() {
   const [listOfGames, setListOfGames] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isSiteModerator,setIsSiteModerator] = useState(false)
+  const [showAddGameMenu,setShowAddGameMenu] = useState(false)
   const username = useContext(UserContext);
 
 
@@ -56,11 +60,27 @@ function GameList() {
   });
 
   return (
+    <>
+    
+    {showAddGameMenu && <PopupMenu><h2>Showing</h2></PopupMenu>
+                        }
+
+    {isSiteModerator && 
+      <p style={{'textAlign':'center'}}>
+        <Button onClick={() => {setShowAddGameMenu(!showAddGameMenu)}}>Add Game (Site Mod only) </Button>
+      </p>
+    }
+
+    
+    <div style={{'display':'flex','justifyContent':'center'}}>
+
+    
     <div id="game-list">
-      {isSiteModerator && <h1>Länk för att lägga till spel</h1>}
       {loading && <Loading />}
       {listOfGamesJSX}
     </div>
+    </div>
+    </>
   );
 }
 

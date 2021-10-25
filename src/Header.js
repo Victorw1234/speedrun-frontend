@@ -17,6 +17,7 @@ function Header({ updateUser }) {
           {username == null && <Link to="/Login">Login</Link>}
         </span>
         <span>
+          
           {username != null && username}
           {username != null && <Logout updateUser={updateUser} />}
         </span>
