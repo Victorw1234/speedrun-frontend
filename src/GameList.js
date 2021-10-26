@@ -7,6 +7,7 @@ import { UserContext } from "./UserContext";
 import "./Css/GameList.css";
 import { Button } from "@material-ui/core";
 import PopupMenu from "./Components/PopupMenu";
+import AddGame from "./AddGame";
 
 
 function GameList() {
@@ -62,12 +63,17 @@ function GameList() {
   return (
     <>
     
-    {showAddGameMenu && <PopupMenu><h2>Showing</h2></PopupMenu>
-                        }
+    {showAddGameMenu && 
+    <PopupMenu toggle={() => {setShowAddGameMenu(!showAddGameMenu)}}>
+      <AddGame/>
+    </PopupMenu>
+    }
 
     {isSiteModerator && 
       <p style={{'textAlign':'center'}}>
-        <Button onClick={() => {setShowAddGameMenu(!showAddGameMenu)}}>Add Game (Site Mod only) </Button>
+        <Button onClick={() => {setShowAddGameMenu(!showAddGameMenu)}}>
+          Add Game (Site Mod only) 
+          </Button>
       </p>
     }
 
