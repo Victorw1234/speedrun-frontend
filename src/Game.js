@@ -43,6 +43,7 @@ function Game({ match, history }) {
         <img alt="gameimg" style={{'width':'200px','height':'200px'}} src={`${API}/Resources/Images/${gameInfo.imageName}`}/>     
         <h3>{gameInfo != null && gameInfo.title}</h3>
         <h4 id="game-admins">Game admins:</h4> 
+        {gameInfo.admins.map((e,index) => {return <p key={index}>{e}</p> })}
       </div>
 
         
