@@ -17,10 +17,34 @@ const emptyGameInfo = {
 function Game({ match, history }) {
   const API = useContext(APIContext);
   const [gameInfo, setGameInfo] = useState(null);
+  const [update,setUpdate] = useState(0);
   const [showChangeImg,setShowChangeImg] = useState(false)
   const user = useContext(UserContext)
 
+  function handleFileUpload(e) {
+    let file = e.target.files[0]
+    console.log(file)
+    var reader = new FileReader();
+    var baseString;
+    reader.onloadend = function () {
+        baseString = reader.result;
+        console.log(gameInfo.title)
+        let obj  = { Img : baseString, GameTitle: gameInfo.title}
+        console.log(JSON.stringify(obj))
+        fetch(`${API}/api/Game/AddGameImage`, {
+          method: "POST",
+          mode: "cors",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(obj)
+        }).then((res) => res.json()).then((data) => {setUpdate(update + 1);alert(data.msg)})
+    };
+    reader.readAsDataURL(file);
+    
 
+  }
 
   async function fetchGameInfo() {
     let gameInfo = await fetch(
@@ -39,7 +63,7 @@ function Game({ match, history }) {
       console.log("gameInfo: ",data);
       setGameInfo(data);
     });
-  }, []);
+  }, [,update]);
 
   return (
     <div id="game" className="box-styling">
@@ -59,7 +83,7 @@ function Game({ match, history }) {
                      "background":"blue"
                      }}>
                        <form>
-                         <input type="file" onChange={(e) => {console.log("upload file")}} ></input>
+                         <input type="file" onChange={(e) => {handleFileUpload(e)}} ></input>
                        </form>
                      </div> } 
         </div>
