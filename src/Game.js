@@ -103,10 +103,13 @@ function Game({ match, history }) {
           <CategoryExtensionsList
             list={gameInfo.categoryExtensions}
             gameUrl={match.params.title}
+            gameAdmins={gameInfo.admins}
           />
+          <TimesList match={match} gameAdmins={gameInfo.admins} />
           </>
+          
       }
-        <TimesList match={match} />
+        
     </div>
   );
 }

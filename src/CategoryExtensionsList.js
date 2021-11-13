@@ -1,88 +1,118 @@
-import React,{useState,useContext,useEffect} from 'react'
-import {Link } from "react-router-dom";
-import { UserContext } from './UserContext';
-import PopupMenu from './Components/PopupMenu';
-import AddTime from './AddTime';
+import React, { useState, useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { UserContext } from "./UserContext";
+import PopupMenu from "./Components/PopupMenu";
+import AddTime from "./AddTime";
+import AddCategory from "./Components/AddCategory";
 
-function CategoryExtensions({list,gameUrl}) {
+function CategoryExtensions({ list, gameUrl, gameAdmins }) {
+  const username = useContext(UserContext);
+  const [showPopupAddTime, setShowPopupAddTime] = useState(false);
+  const [showPopupAddCategory, setShowPopupAddCategory] = useState(false);
 
-    const username = useContext(UserContext);
-    const [showPopup,setShowPopup] = useState(false);
-    {/*const [test,setTest] = useState([{urlTitle:'asdfasdfasdf',title:'avzxcvzxcv'},
-    {urlTitle:'asdfasdfasdf',title:'avzxcvzxcv'},
-    {urlTitle:'asdfasdfasdf',title:'avzxcvzxcv'},
-    {urlTitle:'asdfasdfasdf',title:'avzxcvzxcv'},
-    {urlTitle:'asdfasdfasdf',title:'avzxcvzxcv'},
-    {urlTitle:'asdfasdfasdf',title:'avzxcvzxcv'},
-    {urlTitle:'asdfasdfasdf',title:'avzxcvzxcv'},
-    {urlTitle:'asdfasdfasdf',title:'avzxcvzxcv'},
-{urlTitle:'asdfasdfasdf',title:'avzxcvzxcv'},])*/}
+  /* passed as prop to AddTime
+       makes sure time gets submitted to the correct category extension*/
+  const [addTimeFor, setAddTimeFor] = useState("");
 
-    /* passed as prop to AddTime
-       makes sure time gets submitted to the correct category extension*/ 
-    const [addTimeFor,setAddTimeFor] = useState('')
+  useEffect(() => {
+    console.log(showPopupAddTime);
+  }, [showPopupAddTime]);
 
- 
+  function togglePopupAddTime() {
+    setShowPopupAddTime(!showPopupAddTime);
+  }
 
-    function togglePopup() {
-        setShowPopup(!showPopup)
+  function addTimeClick(categoryExtension) {
+    if (!showPopupAddTime) {
+      setAddTimeFor(categoryExtension);
+      togglePopupAddTime();
     }
+  }
 
-    function addTimeClick(categoryExtension) {
-        if (!showPopup) {
-            setAddTimeFor(categoryExtension)
-            togglePopup()
-
-        }
-    }
-
-    const listOfCategoryExtensionsJSX = list.map((data,index) => {
-        let categoryExtension = data.urlTitle
-        
-        return  <div style={
-            {'padding':'8px',
-             'borderRadius':'2px',
-             'boxShadow':'0.05rem 0.1rem 0.3rem -0.03rem rgba(0, 0, 0, 0.45)',
-             'display':'inline'}
-        } id="category-extension-entry">
-                    <Link to={`/Game/${gameUrl}/${categoryExtension}`}>
-                        
-                        {data.title}
-
-                    </Link>
-                    {username != null &&
-                        <button onClick={(e) => {
-                                e.stopPropagation()
-                                addTimeClick(categoryExtension)
-                            }}>
-                            + 
-                        </button>
-                    }
-                </div>
-    })
+  const listOfCategoryExtensionsJSX = list.map((data, index) => {
+    let categoryExtension = data.urlTitle;
 
     return (
-        <>
-        { showPopup === true && 
-        <PopupMenu toggle={togglePopup}> 
-            <div style={{'backgroundColor':'white',
-                         'marginTop':'16px',
-                         'padding':'12px',
-                         'borderRadius':'4px',
-                         'boxShadow':'box-shadow: 0.05rem 0.1rem 0.3rem -0.03rem rgba(0, 0, 0, 0.45)'}} onClick={(e) => {e.stopPropagation()}}>
-                <AddTime gameUrl={gameUrl} categoryExtension={addTimeFor}/>
-            </div>
-        </PopupMenu> 
-        }
-        <div style={{'display':'flex',
-                     'flexWrap':'wrap'}} id="list-of-category-extensions">
-            
-            {listOfCategoryExtensionsJSX}
-            
-            
+      <>
+        <div
+          style={{
+            padding: "8px",
+            borderRadius: "2px",
+            boxShadow: "0.05rem 0.1rem 0.3rem -0.03rem rgba(0, 0, 0, 0.45)",
+            display: "inline",
+          }}
+          id="category-extension-entry"
+        >
+          <Link to={`/Game/${gameUrl}/${categoryExtension}`}>{data.title}</Link>
+          {username != null && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                addTimeClick(categoryExtension);
+              }}
+            >
+              +
+            </button>
+          )}
         </div>
-        </>
-    )
+      </>
+    );
+  });
+
+  return (
+    <>
+      {showPopupAddTime === true && (
+        <PopupMenu toggle={togglePopupAddTime}>
+          <div
+            style={{
+              backgroundColor: "white",
+              marginTop: "16px",
+              padding: "12px",
+              borderRadius: "4px",
+              boxShadow:
+                "box-shadow: 0.05rem 0.1rem 0.3rem -0.03rem rgba(0, 0, 0, 0.45)",
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            <AddTime gameUrl={gameUrl} categoryExtension={addTimeFor} />
+          </div>
+        </PopupMenu>
+      )}
+      <div
+        style={{ display: "flex", flexWrap: "wrap" }}
+        id="list-of-category-extensions"
+      >
+        {listOfCategoryExtensionsJSX}
+        {gameAdmins.includes(username) && (
+          <div
+            style={{
+              padding: "8px",
+              borderRadius: "2px",
+              boxShadow: "0.05rem 0.1rem 0.3rem -0.03rem rgba(0, 0, 0, 0.45)",
+              display: "inline",
+            }}
+            id="category-extension-entry"
+          >
+            <button
+              onClick={() => {
+                console.log("click");
+                setShowPopupAddCategory(true);
+              }}
+            >
+              Add Category
+            </button>
+          </div>
+        )}
+        {showPopupAddCategory === true && (
+          <PopupMenu toggle={() => {setShowPopupAddCategory(!showPopupAddCategory)}}>
+            <AddCategory/>
+          </PopupMenu>
+        )}
+      </div>
+    </>
+  );
 }
 
-export default CategoryExtensions
+export default CategoryExtensions;

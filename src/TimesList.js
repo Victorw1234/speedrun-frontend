@@ -3,11 +3,13 @@ import { APIContext } from './APIContext'
 import TimeParser from './TimeParser'
 import { Table, TableHead, TableBody, TableCell, TableRow } from "@material-ui/core";
 import './Css/TimesList.css'
+import { UserContext } from "./UserContext";
 
-function TimesList({match}) {
+function TimesList({match,gameAdmins}) {
     const API = useContext(APIContext)
     const [listOfTimes,setListOfTimes] = useState([])
-    let fetchAgain = 0;
+    const user = useContext(UserContext)
+
 
     async function fetchTimeData() {
         let response = await fetch(`${API}/api/Time/${match.params.title}/${match.params.categoryExtension}`)
@@ -33,6 +35,7 @@ function TimesList({match}) {
                     <TableCell style={cellStyle}>{data.username}</TableCell>
                     <TableCell style={cellStyle}><a href={data.link}>Link</a></TableCell>
                     <TableCell style={cellStyle}>{TimeParser.onlyHoursMinutesSeconds(data.runTime)}</TableCell>
+                    {(gameAdmins.includes(user) || data.username == user) && <TableCell style={cellStyle}>Remove Time</TableCell>}
                 </TableRow>
     })
 
