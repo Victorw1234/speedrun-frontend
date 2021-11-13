@@ -50,6 +50,7 @@ function Game({ match, history }) {
   }
 
   async function fetchGameInfo() {
+    
     let gameInfo = await fetch(
       `${API}/api/Game/ByString/${match.params.title}`
     );
@@ -102,7 +103,8 @@ function Game({ match, history }) {
         
           <CategoryExtensionsList
             list={gameInfo.categoryExtensions}
-            gameUrl={match.params.title}
+            gameUrl={gameInfo.urlTitle}
+            gameTitle={gameInfo.title}
             gameAdmins={gameInfo.admins}
           />
           <TimesList match={match} gameAdmins={gameInfo.admins} />

@@ -5,7 +5,7 @@ import PopupMenu from "./Components/PopupMenu";
 import AddTime from "./AddTime";
 import AddCategory from "./Components/AddCategory";
 
-function CategoryExtensions({ list, gameUrl, gameAdmins }) {
+function CategoryExtensions({ list, gameUrl,gameTitle, gameAdmins }) {
   const username = useContext(UserContext);
   const [showPopupAddTime, setShowPopupAddTime] = useState(false);
   const [showPopupAddCategory, setShowPopupAddCategory] = useState(false);
@@ -30,8 +30,7 @@ function CategoryExtensions({ list, gameUrl, gameAdmins }) {
   }
 
   const listOfCategoryExtensionsJSX = list.map((data, index) => {
-    let categoryExtension = data.urlTitle;
-
+    console.log(data);
     return (
       <>
         <div
@@ -43,12 +42,13 @@ function CategoryExtensions({ list, gameUrl, gameAdmins }) {
           }}
           id="category-extension-entry"
         >
-          <Link to={`/Game/${gameUrl}/${categoryExtension}`}>{data.title}</Link>
+          
+          <Link to={(`/Game/${gameUrl}/${data.urlTitle}`)}>{data.title}</Link>
           {username != null && (
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                addTimeClick(categoryExtension);
+                addTimeClick(data.urlTitle);
               }}
             >
               +
@@ -106,8 +106,8 @@ function CategoryExtensions({ list, gameUrl, gameAdmins }) {
           </div>
         )}
         {showPopupAddCategory === true && (
-          <PopupMenu toggle={() => {setShowPopupAddCategory(!showPopupAddCategory)}}>
-            <AddCategory/>
+          <PopupMenu toggle={() => {setShowPopupAddCategory(false)}}>
+            <AddCategory gameTitle={gameTitle}/>
           </PopupMenu>
         )}
       </div>

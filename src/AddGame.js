@@ -38,7 +38,7 @@ function AddGame() {
     }
 
     return (
-        <div style={{'background':'white','padding':'16px','marginTop':'160px'}}>
+        <div style={{'background':'white','padding':'16px'}}>
             <form>
                 <TextField value={titleForm} onChange={(e) => {setTitleForm(e.target.value)}} type="text" placeholder="Game Name"/>
                 <Button onClick={submitForm} type="submit" value="Add Game">Add Game</Button>
