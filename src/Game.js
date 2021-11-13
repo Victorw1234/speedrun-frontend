@@ -13,6 +13,19 @@ const emptyGameInfo = {
   urlTitle: "",
 };
 
+async function imgToBase64 (img) {
+  return new Promise((resolve,reject) => {
+    var reader = new FileReader();
+    let baseString = ""
+    reader.onloadend = function () {
+      baseString = reader.result;
+      resolve(baseString)
+    }
+    reader.readAsDataURL(img);
+    reader.onerror = reject;
+  })
+}
+
 
 function Game({ match, history }) {
   const API = useContext(APIContext);
@@ -21,29 +34,19 @@ function Game({ match, history }) {
   const [showChangeImg,setShowChangeImg] = useState(false)
   const user = useContext(UserContext)
 
-  function handleFileUpload(e) {
-    let file = e.target.files[0]
-    console.log(file)
-    var reader = new FileReader();
-    var baseString;
-    reader.onloadend = function () {
-        baseString = reader.result;
-        console.log(gameInfo.title)
-        let obj  = { Img : baseString, GameTitle: gameInfo.title}
-        console.log(JSON.stringify(obj))
-        fetch(`${API}/api/Game/AddGameImage`, {
-          method: "POST",
-          mode: "cors",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(obj)
-        }).then((res) => res.json()).then((data) => {setUpdate(update + 1);alert(data.msg)})
-    };
-    reader.readAsDataURL(file);
-    
-
+  async function handleFileUpload(e) {
+    let file = e.target.files[0]    
+    var baseString = await imgToBase64(file);
+    let obj  = { Img : baseString, GameTitle: gameInfo.title}
+    fetch(`${API}/api/Game/AddGameImage`, {
+      method: "POST",
+      mode: "cors",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(obj)
+    }).then((res) => res.json()).then((data) => {setUpdate(update + 1);alert(data.msg)})
   }
 
   async function fetchGameInfo() {
