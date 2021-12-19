@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import PopupMenu from "./Components/PopupMenu";
@@ -14,10 +14,6 @@ function CategoryExtensions({ list, gameUrl,gameTitle, gameAdmins }) {
        makes sure time gets submitted to the correct category extension*/
   const [addTimeFor, setAddTimeFor] = useState("");
 
-  useEffect(() => {
-    console.log(showPopupAddTime);
-  }, [showPopupAddTime]);
-
   function togglePopupAddTime() {
     setShowPopupAddTime(!showPopupAddTime);
   }
@@ -30,10 +26,9 @@ function CategoryExtensions({ list, gameUrl,gameTitle, gameAdmins }) {
   }
 
   const listOfCategoryExtensionsJSX = list.map((data, index) => {
-    console.log(data);
     return (
-      <>
         <div
+          key={index}
           style={{
             padding: "8px",
             borderRadius: "2px",
@@ -55,7 +50,6 @@ function CategoryExtensions({ list, gameUrl,gameTitle, gameAdmins }) {
             </button>
           )}
         </div>
-      </>
     );
   });
 

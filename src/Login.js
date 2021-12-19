@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import { APIContext } from "./APIContext";
-import useLocalStorage from "./useLocalStorage";
 import { UserContext } from "./UserContext";
 import { Link } from "react-router-dom";
 import { TextField, Button } from "@material-ui/core";

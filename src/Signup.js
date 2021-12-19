@@ -58,7 +58,7 @@ function Signup() {
       errorCount++;
     }
 
-    if (formPassword != formConfirmPassword) {
+    if (formPassword !== formConfirmPassword) {
       setFormConfirmPasswordError("Passwords do not match");
       errorCount++;
     }

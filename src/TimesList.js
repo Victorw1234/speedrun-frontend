@@ -11,21 +11,22 @@ function TimesList({match,gameAdmins}) {
     const user = useContext(UserContext)
 
 
-    async function fetchTimeData() {
-        let response = await fetch(`${API}/api/Time/${match.params.title}/${match.params.categoryExtension}`)
-        response = response.json();
-        return response;
-    }
-
     useEffect(() => {
+        async function fetchTimeData() {
+            let response = await fetch(`${API}/api/Time/${match.params.title}/${match.params.categoryExtension}`)
+            response = response.json();
+            return response;
+        }
+
+        if (match.params.categoryExtension === undefined)
+            return
 
         let times = fetchTimeData();
         times.then((data) => {
-            console.log(data)
             setListOfTimes(data)
         }) 
 
-    },[match.params.title,match.params.categoryExtension])
+    },[match.params.title,match.params.categoryExtension,API])
 
     let cellStyle = {'padding':'6px'}
 
@@ -35,7 +36,7 @@ function TimesList({match,gameAdmins}) {
                     <TableCell style={cellStyle}>{data.username}</TableCell>
                     <TableCell style={cellStyle}><a href={data.link}>Link</a></TableCell>
                     <TableCell style={cellStyle}>{TimeParser.onlyHoursMinutesSeconds(data.runTime)}</TableCell>
-                    {(gameAdmins.includes(user) || data.username == user) && <TableCell style={cellStyle}>Remove Time</TableCell>}
+                    {(gameAdmins.includes(user) || data.username === user) && <TableCell style={cellStyle}>Remove Time</TableCell>}
                 </TableRow>
     })
 

@@ -3,7 +3,7 @@ import React from 'react'
 function Loading() {
     return (
         <div>
-            <img draggable="false" src="Loading.gif"/>
+            <img alt="Loading..." draggable="false" src="Loading.gif"/>
         </div>
     )
 }

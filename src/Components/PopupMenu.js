@@ -3,7 +3,7 @@ import '../Css/PopupMenu.css'
 
 function PopupMenu({children,toggle}) {
     return (
-        <div onClick={toggle} class="popup-menu">
+        <div onClick={toggle} className="popup-menu">
             <div id="popup-menu-child" onClick={(e) => {e.stopPropagation()}}>
                 {children}
             </div>

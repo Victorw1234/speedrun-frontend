@@ -1,12 +1,10 @@
 import React, { useContext, useState } from "react";
-import { UserContext } from "./UserContext";
 import { APIContext } from "./APIContext";
 import { Link } from "react-router-dom";
 import Loading from "./Loading";
 import { Button, TextField } from "@material-ui/core";
 
 function AddTime({gameUrl,categoryExtension }) {
-  const username = useContext(UserContext);
   const API = useContext(APIContext);
 
 
@@ -43,8 +41,7 @@ function AddTime({gameUrl,categoryExtension }) {
     let errorCount = 0;
 
     // validate link
-    let expression =
-      /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
+    let expression =/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;// eslint-disable-line
     let regex = new RegExp(expression);
     let validateChars = regex.test(formLink);
     if (!validateChars) {

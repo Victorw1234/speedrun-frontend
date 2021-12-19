@@ -1,9 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import { APIContext } from "./APIContext";
-import { Link } from "react-router-dom";
 import Loading from "./Loading";
 import GameListEntry from "./Components/GameListEntry";
-import { UserContext } from "./UserContext";
 import "./Css/GameList.css";
 import { Button } from "@material-ui/core";
 import PopupMenu from "./Components/PopupMenu";
@@ -15,29 +13,29 @@ function GameList() {
   const [loading, setLoading] = useState(true);
   const [isSiteModerator,setIsSiteModerator] = useState(false)
   const [showAddGameMenu,setShowAddGameMenu] = useState(false)
-  const username = useContext(UserContext);
 
 
   const API = useContext(APIContext);
-
-  async function fetchListOfGames() {
-    let response = await fetch(`${API}/api/Game`);
-    response = response.json();
-    return response;
-  }
-
-  async function fetchIsSiteModerator() {
-    let response = await fetch(`${API}/Login`,{credentials: "include"});
-    response = response.json();
-    return response;
-  }
 
   useEffect(() => {
     setLoading(listOfGames.length <= 0);
   }, [listOfGames]);
 
-  // used to fetch games from api when the component first renders
+  // used to fetch games from api when the component renders
   useEffect(() => {
+    async function fetchListOfGames() {
+      let response = await fetch(`${API}/api/Game`);
+      response = response.json();
+      return response;
+    }
+  
+    async function fetchIsSiteModerator() {
+      let response = await fetch(`${API}/Login`,{credentials: "include"});
+      response = response.json();
+      return response;
+    }
+
+
     let games = fetchListOfGames();
 
     games.then((data) => {
@@ -52,10 +50,11 @@ function GameList() {
     }) 
 
     console.log(games);
-  }, []);
+  }, [API]);
 
   const listOfGamesJSX = listOfGames.map((data, index) => {
     return <GameListEntry titleUrl={data.urlTitle} 
+                          key={index}
                           title={data.title} 
                           imageName={data.imageName}/>;
   });

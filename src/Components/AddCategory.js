@@ -17,10 +17,10 @@ function AddCategory({ gameTitle }) {
       },
       body: JSON.stringify(obj),
     }).then((res) => {
-      if (res.status == 200) {
+      if (res.status === 200) {
           alert("Category was added.")
       }
-      else if (res.status == 400) {
+      else if (res.status === 400) {
           alert("Not unique url path/name")
       }
       else {

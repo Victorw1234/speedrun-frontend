@@ -49,35 +49,35 @@ function Game({ match, history }) {
     }).then((res) => res.json()).then((data) => {setUpdate(update + 1);alert(data.msg)})
   }
 
-  async function fetchGameInfo() {
-    
-    let gameInfo = await fetch(
-      `${API}/api/Game/ByString/${match.params.title}`
-    );
-    if (gameInfo.status >= 400 && gameInfo.status <= 499) {
-      return emptyGameInfo;
-    }
-    gameInfo = gameInfo.json();
-    return gameInfo;
-  }
-
   useEffect(() => {
+    async function fetchGameInfo() {
+    
+      let gameInfo = await fetch(
+        `${API}/api/Game/ByString/${match.params.title}`
+      );
+      if (gameInfo.status >= 400 && gameInfo.status <= 499) {
+        return emptyGameInfo;
+      }
+      gameInfo = gameInfo.json();
+      return gameInfo;
+    }
+
     let gameInfo = fetchGameInfo();
     gameInfo.then((data) => {
       console.log("gameInfo: ",data);
       setGameInfo(data);
     });
-  }, [,update]);
+  }, [update,API,match.params.title]);
 
   return (
     <div id="game" className="box-styling">
       {gameInfo != null && <>
       <div id="game-info">
         <div onMouseEnter={() => {setShowChangeImg(true)}} onMouseLeave={() => {setShowChangeImg(false)}}
-        class="image-container" style={{"position":"relative"}}>
+        className="image-container" style={{"position":"relative"}}>
         <img alt="gameimg" style={{'width':'200px','height':'200px'}} src={`${API}/Resources/Images/${gameInfo.imageName}`}/>   
         {(showChangeImg && gameInfo.admins.includes(user)) && 
-         <div class="changeimg" style={{
+         <div className="changeimg" style={{
                      "position":"absolute",
                      "color":"white",
                      "bottom":"0px",

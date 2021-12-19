@@ -27,12 +27,12 @@ function AddGame() {
         setStatus("Loading...");
         let res = await postAddGame();
         console.log("res.status: ",res.status)
-        if (res.status == 200) {
+        if (res.status === 200) {
             setStatus("")
             setTitleForm("")
             window.location.reload(); // refresh the page if successfully added to db
         }
-        else if (res.status == 401) {
+        else if (res.status === 401) {
             setStatus("Error adding the game to the database.")
         }
     }
