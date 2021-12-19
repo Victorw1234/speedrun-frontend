@@ -9,5 +9,3 @@ This project uses create-react-app, which means in order to run it you will need
 To run this project, clone it to your computer and simply write the following command in a terminal:
 ### `npm start`
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-This frontend depends on the <a href="https://github.com/Victorw1234/speedrun-backend">backend</a> to function properly.
