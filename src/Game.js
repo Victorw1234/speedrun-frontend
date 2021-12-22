@@ -8,6 +8,7 @@ import useFetch from "./useFetch";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
 const emptyGameInfo = {
+  success : false,
   admins: [],
   categoryExtensions: [],
   title: "",
@@ -56,9 +57,9 @@ function Game({ match, history }) {
 
   return (
     <>
-    {gameInfo.success == false && <Redirect to="/404"/> /* If gameinfo has succes set to false,
-                                                                   it means the game probably doesnt exist */ } 
-    {gameInfo.success &&
+    {gameInfo.success === false && !loading && <Redirect to="/404"/> /* If gameinfo has succes set to false,
+                                                                   it means the game doesnt exist */ } 
+    {gameInfo.success && !loading &&
     <div id="game" className="box-styling">
       
       {gameInfo != null && !loading && <>
