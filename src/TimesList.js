@@ -39,8 +39,8 @@ function TimesList({match,gameAdmins}) {
                     {(gameAdmins.includes(user) || data.username === user) && <TableCell style={cellStyle}>Remove Time</TableCell>}
                 </TableRow>
     })
-
     return (
+        
         <div id="time-list">
             <Table>
                 <TableHead>

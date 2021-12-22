@@ -2,16 +2,17 @@ import "./App.css";
 import Login from "./Login";
 import { APIContext } from "./APIContext";
 import { UserContext } from "./UserContext";
-import useLocalStorage from "./useLocalStorage";
-import { useEffect } from "react";
+//import useLocalStorage from "./useLocalStorage";
+import { useEffect,useState } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Header from "./Header";
 import GameList from "./GameList";
 import Game from "./Game";
 import Signup from "./Signup";
+import Page404 from "./Page404"
 
 function App() {
-  const [username, setUsername] = useLocalStorage("username", null);
+  const [username, setUsername] = useState("username", null);
   let API = "http://localhost:52107";
 
 
@@ -21,8 +22,8 @@ function App() {
 
   useEffect(() => {
     async function onStartup() {
-      var isLoggedIn = false;
-      var fetchedUsername;
+      let isLoggedIn = false;
+      let fetchedUsername;
       await fetch(API + "/Login", {
         method: "GET",
         credentials: "include",
@@ -70,7 +71,7 @@ function App() {
                   path="/Game/:title/:categoryExtension"
                   component={Game}
                 />
-
+                <Route exact path="/404" component={Page404} />
                 {/*<Route 
                   component={Page404}
                   />*/}

@@ -4,7 +4,8 @@ import CategoryExtensionsList from "./CategoryExtensionsList";
 import TimesList from "./TimesList";
 import "./Css/Game.css";
 import { UserContext } from "./UserContext";
-
+import useFetch from "./useFetch";
+import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
 const emptyGameInfo = {
   admins: [],
@@ -29,9 +30,9 @@ async function imgToBase64 (img) {
 
 function Game({ match, history }) {
   const API = useContext(APIContext);
-  const [gameInfo, setGameInfo] = useState(null);
   const [update,setUpdate] = useState(0);
   const [showChangeImg,setShowChangeImg] = useState(false)
+  const [gameInfo,loading] = useFetch(`${API}/api/Game/ByString/${match.params.title}`,emptyGameInfo)
   const user = useContext(UserContext)
 
   async function handleFileUpload(e) {
@@ -50,28 +51,17 @@ function Game({ match, history }) {
   }
 
   useEffect(() => {
-    async function fetchGameInfo() {
-    
-      let gameInfo = await fetch(
-        `${API}/api/Game/ByString/${match.params.title}`
-      );
-      if (gameInfo.status >= 400 && gameInfo.status <= 499) {
-        return emptyGameInfo;
-      }
-      gameInfo = gameInfo.json();
-      return gameInfo;
-    }
-
-    let gameInfo = fetchGameInfo();
-    gameInfo.then((data) => {
-      console.log("gameInfo: ",data);
-      setGameInfo(data);
-    });
-  }, [update,API,match.params.title]);
+    console.log(gameInfo.hasOwnProperty("statuscode"))
+  },[gameInfo])
 
   return (
+    <>
+    {gameInfo.success == false && <Redirect to="/404"/> /* If gameinfo has succes set to false,
+                                                                   it means the game probably doesnt exist */ } 
+    {gameInfo.success &&
     <div id="game" className="box-styling">
-      {gameInfo != null && <>
+      
+      {gameInfo != null && !loading && <>
       <div id="game-info">
         <div onMouseEnter={() => {setShowChangeImg(true)}} onMouseLeave={() => {setShowChangeImg(false)}}
         className="image-container" style={{"position":"relative"}}>
@@ -92,10 +82,10 @@ function Game({ match, history }) {
                      </div> } 
         </div>
         
-        <h3>{gameInfo != null && gameInfo.title}</h3>
+        <h3>{gameInfo != null && !loading && gameInfo.title}</h3>
         <div id="game-admins">
           <h4 id="game-admins">Game admins:</h4> 
-        {gameInfo.admins.map((e,index) => {return <p key={index}>{e}</p> })}
+        {gameInfo != null && !loading && gameInfo.admins.map((e,index) => {return <p key={index}>{e}</p> })}
         </div>
         
       </div>
@@ -113,6 +103,9 @@ function Game({ match, history }) {
       }
         
     </div>
+      }
+    </>
+  
   );
 }
 
