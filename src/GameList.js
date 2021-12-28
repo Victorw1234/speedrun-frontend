@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState,useRef } from "react";
 import { APIContext } from "./APIContext";
 import Loading from "./Loading";
 import GameListEntry from "./Components/GameListEntry";
@@ -7,15 +7,22 @@ import { Button } from "@material-ui/core";
 import PopupMenu from "./Components/PopupMenu";
 import AddGame from "./AddGame";
 import useFetch from "./useFetch";
+import Sorter from "./Sorter";
 
 
 function GameList() {
   const API = useContext(APIContext);
   const [showAddGameMenu,setShowAddGameMenu] = useState(false)
   const [listOfGames,loading] = useFetch(`${API}/api/Game`,[])
+  const [sortedGames,setSortedGames] = useState(listOfGames) /*listofgames stays the same. Sortedgames is a copy
+  of listofgames, but sorted in the way the user wants to see it.  */
   const [isSiteModerator] = useFetch(`${API}/Login`,{siteModerator:false},{credentials: "include"})
 
-  const listOfGamesJSX = listOfGames.map((data, index) => {
+  useEffect(() => {
+    setSortedGames(listOfGames)
+  },[listOfGames])
+
+  const listOfGamesJSX = sortedGames.map((data, index) => {
     return <GameListEntry titleUrl={data.urlTitle} 
                           key={index}
                           title={data.title} 
@@ -38,16 +45,19 @@ function GameList() {
           </Button>
       </p>
     }
+   
+      
 
-    
-    <div style={{'display':'flex','justifyContent':'center'}}>
 
-    
-    <div id="game-list">
-      {loading && <Loading />}
-      {listOfGamesJSX}
-    </div>
-    </div>
+
+    {<Sorter array={sortedGames} setArray={setSortedGames}/>}
+
+
+      <div id="game-list">
+        {loading && <Loading />}
+        {listOfGamesJSX}
+      </div>
+
     </>
   );
 }

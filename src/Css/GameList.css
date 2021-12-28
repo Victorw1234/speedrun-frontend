@@ -1,6 +1,7 @@
 #game-list {
-    display:grid;
-    grid-template-columns: auto auto auto;
+    display:flex;
+    justify-content: center;
+    flex-wrap:wrap;
 }
 
 @media screen and (max-width: 992px) {
