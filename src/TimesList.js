@@ -4,6 +4,7 @@ import TimeParser from './TimeParser'
 import { Table, TableHead, TableBody, TableCell, TableRow } from "@material-ui/core";
 import './Css/TimesList.css'
 import { UserContext } from "./UserContext";
+import { Link } from 'react-router-dom';
 
 function TimesList({match,gameAdmins}) {
     const API = useContext(APIContext)
@@ -33,7 +34,7 @@ function TimesList({match,gameAdmins}) {
     const listOfTimesJSX = listOfTimes.map((data,index) => {
         return  <TableRow key={index}>
                     <TableCell style={cellStyle}>{index+1}</TableCell>
-                    <TableCell style={cellStyle}>{data.username}</TableCell>
+                    <TableCell style={cellStyle}><Link to={`/User/${data.username}`}>{data.username}</Link></TableCell>
                     <TableCell style={cellStyle}><a href={data.link}>Link</a></TableCell>
                     <TableCell style={cellStyle}>{TimeParser.onlyHoursMinutesSeconds(data.runTime)}</TableCell>
                     {(gameAdmins.includes(user) || data.username === user) && <TableCell style={cellStyle}>Remove Time</TableCell>}

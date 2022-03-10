@@ -10,6 +10,7 @@ import GameList from "./GameList";
 import Game from "./Game";
 import Signup from "./Signup";
 import Page404 from "./Page404"
+import UserPage from "./UserPage";
 
 function App() {
   const [username, setUsername] = useState("username", null);
@@ -70,6 +71,11 @@ function App() {
                   exact
                   path="/Game/:title/:categoryExtension"
                   component={Game}
+                />
+                <Route 
+                  exact 
+                  path="/User/:username"
+                  component={UserPage}
                 />
                 <Route exact path="/404" component={Page404} />
                 {/*<Route 
