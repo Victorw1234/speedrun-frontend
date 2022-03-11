@@ -16,11 +16,12 @@ import {
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { Link } from "react-router-dom";
+import Logout from "./Logout";
 const pages = ["Home", "Games"];
 const pagesURL = ["/Home", "/Games"];
 const settings = ["User"];
 
-const ResponsiveAppBar = () => {
+const ResponsiveAppBar = ({updateUser}) => {
     const username = useContext(UserContext);
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -140,6 +141,7 @@ const ResponsiveAppBar = () => {
                                         onClick={handleOpenUserMenu}
                                         sx={{ p: 0 }}
                                     >
+                                        <Logout updateUser={updateUser}/>
                                         <Typography
                                             variant="h6"
                                             noWrap

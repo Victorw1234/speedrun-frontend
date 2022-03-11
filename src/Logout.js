@@ -1,5 +1,7 @@
+import { configure } from '@testing-library/react';
 import React,{useContext} from 'react'
 import { APIContext } from './APIContext';
+import {Button} from "@material-ui/core";
 function Logout({updateUser}) {
     const API = useContext(APIContext)
 
@@ -16,7 +18,7 @@ function Logout({updateUser}) {
 
     return (
         <>
-            <button onClick={handleLogout}>Logout</button>
+            <Button onClick={handleLogout}>Logout</Button>
         </>
     )
 }

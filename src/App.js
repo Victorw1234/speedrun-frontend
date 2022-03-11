@@ -55,7 +55,7 @@ function App() {
         <UserContext.Provider value={username}>
           <BrowserRouter>
             {/*<Header updateUser={setUsername} />*/}
-            <ResponsiveAppBar/>
+            <ResponsiveAppBar updateUser={setUsername}/>
             <div className="content-container">
               <Switch>
                 <Route
