@@ -11,6 +11,7 @@ import Game from "./Game";
 import Signup from "./Signup";
 import Page404 from "./Page404"
 import UserPage from "./UserPage";
+import ResponsiveAppBar from './muiHeader'
 
 function App() {
   const [username, setUsername] = useState("username", null);
@@ -53,7 +54,8 @@ function App() {
       <APIContext.Provider value={API}>
         <UserContext.Provider value={username}>
           <BrowserRouter>
-            <Header updateUser={setUsername} />
+            {/*<Header updateUser={setUsername} />*/}
+            <ResponsiveAppBar/>
             <div className="content-container">
               <Switch>
                 <Route
